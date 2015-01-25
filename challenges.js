@@ -69,7 +69,7 @@ var challenges = [
     ,{options: {floorCount: 6, elevatorCount: 2, spawnRate: 0.4}, condition: requireUserCountWithMaxWaitTime(50, 21)}
     ,{options: {floorCount: 7, elevatorCount: 3, spawnRate: 0.6}, condition: requireUserCountWithMaxWaitTime(50, 20)}
 
-    ,{options: {floorCount: 9, elevatorCount: 5, spawnRate: 1.1}, condition: requireUserCountWithMaxWaitTime(60, 19)}
+    ,{options: {floorCount: 9, elevatorCount: 5, spawnRate: 1.1, disappointedAfter: 18}, condition: requireUserCountWithMaxWaitTime(60, 19)}
     ,{options: {floorCount: 9, elevatorCount: 5, spawnRate: 1.1}, condition: requireUserCountWithMaxWaitTime(70, 18)}
     ,{options: {floorCount: 9, elevatorCount: 5, spawnRate: 1.1}, condition: requireUserCountWithMaxWaitTime(80, 17)}
     ,{options: {floorCount: 9, elevatorCount: 5, spawnRate: 1.1}, condition: requireUserCountWithMaxWaitTime(90, 16)}

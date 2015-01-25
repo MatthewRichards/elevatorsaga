@@ -105,6 +105,8 @@ var presentWorld = function($world, world, floorTempl, elevatorTempl, elevatorBu
         
         user.on("new_state", function() {
             $user.css({left: user.worldX, top: user.worldY});
+            if(user.frustrated) { $user.addClass("frustrated"); }
+            if(user.disappointed) { $user.addClass("disappointed"); }
             if(user.done) { $user.addClass("leaving"); }
         });
         user.on("removed", function() {

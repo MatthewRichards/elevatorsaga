@@ -61,10 +61,10 @@ var createWorldCreator = function() {
 
     creator.createWorld = function(options) {
         console.log("Creating world with options", options);
-        var defaultOptions = { floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
+        var defaultOptions = { floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5, frustratedAfter: 15, disappointedAfter: 20 };
         options = _.defaults(_.clone(options), defaultOptions);
         console.log("Options after default are", options);
-        var world = {floorHeight: options.floorHeight, transportedCounter: 0};
+        var world = {floorHeight: options.floorHeight, transportedCounter: 0, frustratedAfter: options.frustratedAfter, disappointedAfter: options.disappointedAfter};
         riot.observable(world);
         
         
@@ -134,7 +134,13 @@ var createWorldCreator = function() {
             _.each(world.elevators, function(e) { e.update(dt); e.updateElevatorMovement(dt) });
             _.each(world.users, function(u) {
                 u.update(dt);
-                world.maxWaitTime = Math.max(world.maxWaitTime, world.elapsedTime - u.spawnTimestamp);
+                var waitTime = world.elapsedTime - u.spawnTimestamp;
+                if (waitTime > world.frustratedAfter || waitTime > world.disappointedAfter) {
+                    u.frustrated = waitTime > world.frustratedAfter;
+                    u.disappointed = waitTime > world.disappointedAfter;
+                    u.trigger("new_state");
+                }
+                world.maxWaitTime = Math.max(world.maxWaitTime, waitTime);
             });
 
             _.remove(world.users, function(u) { return u.removeMe; });
